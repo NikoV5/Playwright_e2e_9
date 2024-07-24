@@ -4,7 +4,6 @@ import { clickLink } from "../../helpers/clickHelpers";
 test.describe('Element Properties', () => {
 
   test.beforeEach(async ({ page }) => {
-
     await page.goto("https://techglobal-training.com/frontend");
 
     await clickLink(page, "HTML Elements");
@@ -43,7 +42,31 @@ test.describe('Element Properties', () => {
     const valueOfDropdown = await companyDropdown.inputValue()
 
     console.log(valueOfDropdown)
-    
+
   })
 
+  test('Executing JavaScript code in Playwright', async({ page }) => {
+
+    const title = await page.title()
+    console.log(title)
+
+    const result = await page.evaluate(() => {
+      return document.title
+    })
+
+    console.log(result)
+
+    const href = await page.evaluate(() => {
+      return document.location.href
+    })
+
+    const element = page.locator('#main_heading')
+
+    const getColor = await element.evaluate((el) => {
+      return window.getComputedStyle(el).getPropertyValue('color')
+    })
+
+    console.log(getColor)
+
+  })
 })
